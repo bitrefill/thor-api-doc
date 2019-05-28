@@ -122,7 +122,7 @@ JSON Body Example
         "status": "payment_pending"
       }
       
-[Query order status result](#paid-balance-query)
+[Query order status result](#success-example-query-order-paid-with-balance)
 
 
 GET /order/:orderid
@@ -177,8 +177,7 @@ After paying for an order, order status can be received through a webhook if web
       }
     }
     
-**Success Example Paid with Balance**
-# Paid Balance Query
+# Success Example: Query Order Paid with Balance
 
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ceca6d9cd48800004097403
