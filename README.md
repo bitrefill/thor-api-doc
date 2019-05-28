@@ -225,4 +225,5 @@ Can be opened through a button via uri or can  be shown as a QR code.
 LNURL can also be decoded to obtain channel opening capacity, push amount, node info.
 
 **lnurl documentation**
+
 More info on lnurl: https://github.com/btcontract/lnurl-rfc/blob/master/spec.md#1-incoming-payment-channel-request
