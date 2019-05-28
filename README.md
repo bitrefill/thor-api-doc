@@ -212,8 +212,17 @@ When an order is successful, a generated QR code of the lightning lnurl can be s
         "other": "Open your new lightning channel with redemption instructions provided"
       }
       
-> Link provided links to our site containing instructions to redeem a channel
+**link** 
 
-> lnurl contains all data necessary for users to open a channel if lnurl supported, lnurl can also be shown as a QR code
+Contains a link to our site containing instructions to redeem a channel
 
+**lnurl**
+
+Contains all data necessary for users to open a channel if lightning wallet supports lnurl.
+
+Can be opened through a button via uri or can  be shown as a QR code.
+
+LNURL can also be decoded to obtain channel opening capacity, push amount, node info.
+
+**lnurl documentation**
 More info on lnurl: https://github.com/btcontract/lnurl-rfc/blob/master/spec.md#1-incoming-payment-channel-request
