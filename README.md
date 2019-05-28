@@ -54,6 +54,7 @@ Turbo channels include a balance and incoming capacity.
         ],
     }
 
+**Paid with lightning example**
 
 POST /order
 
@@ -90,11 +91,45 @@ JSON Body Example
         }
       }
 
+**Paid with balance example**
+
+Create and Purchase Order when paying with bitcoin account balance
+
+POST /purchase
+
+JSON Body Example
+
+    {
+        "operatorSlug": "lightning-channel",
+        "valuePackage" : "2,000,000 sats capacity",
+        "email" : "Customer email", // used for receipts
+        "sendEmail" : true/false, // Optional. If false, receipt email won't be sent. Default: true
+        "webhook_url" : "http://your.webhook.url", // Optional. See Webhook section https://bitrefill.docs.apiary.io/#reference/webhooks//order
+        "userRef": "internal-id-01" // Optional, a reference for your system ( max 128 chars )
+    }
+
+
+    Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/purchase -d '{"operatorSlug": "lightning-channel", "valuePackage": "2,000,000 sats capacity", "email": "test@bitrefill.com"}'
+    > {
+        "id": "5ceca6d9cd48800004097403",
+        "email": "test@bitrefill.com",
+        "expired": false,
+        "value": "2,000,000 sats capacity",
+        "product": "lightning-channel",
+        "price": 80900,
+        "partialPayment": false,
+        "userRef": null,
+        "status": "payment_pending"
+      }
+      
+[Query order status result](#paid-balance-query)
+
+
 GET /order/:orderid
 
 After paying for an order, order status can be received through a webhook if webhook_url provided, or by manually querying order status.
 
-**Unpaid example**
+**Unpaid example lightning**
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ce472b9950b353c59bcd412
     > {
@@ -115,10 +150,10 @@ After paying for an order, order status can be received through a webhook if web
         }
       }
       
-**Success Example**
+**Success Example lightning**
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ce472b9950b353c59bcd412
-    {
+    > {
       "id": "5ce47aa5d4abef44c7a2f91e",
       "email": "test@bitrefill.com",
       "expired": false,
@@ -141,7 +176,28 @@ After paying for an order, order status can be received through a webhook if web
         "other": "Open your new lightning channel with redemption instructions provided"
       }
     }
+    
+**Success Example Paid with Balance**
+# Paid Balance Query
 
+
+    Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ceca6d9cd48800004097403
+    > {
+      "id": "5ceca6d9cd48800004097403",
+      "email": "test@bitrefill.com",
+      "expired": false,
+      "value": "2,000,000 sats capacity",
+      "product": "lightning-channel",
+      "price": 80900,
+      "partialPayment": false,
+      "userRef": null,
+      "status": "success",
+      "thorInfo": {
+        "link": "https://www.bitrefill.com/thor/b14d6a2817733c9a1af2ec00c5d9b6bae60a7044ae840e68e2049adcd935e528",
+        "k1": "b14d6a2817733c9a1af2ec00c5d9b6bae60a7044ae840e68e2049adcd935e528",
+        "other": "Open your new lightning channel with redemption instructions provided"
+      }
+    }
 
 
 When an order is successful, a generated QR code of the lightning lnurl can be shown, or a link to our site guiding the user to have a channel opened to them.
