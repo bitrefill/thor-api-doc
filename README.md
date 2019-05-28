@@ -1,6 +1,6 @@
 # thor-api-doc
 
-**Authentication / Making requests**
+# Authentication / Making requests
 
     API Base url: https://api.bitrefill.com/v1
 
@@ -10,8 +10,7 @@
     > Hello World!
 
 
-**Thor API**
-
+# Inventory
 Query inventory for packages in stock
 
 GET /inventory/lightning-channel
@@ -54,7 +53,7 @@ Turbo channels include a balance and incoming capacity.
         ],
     }
 
-**Paid with lightning example**
+# Order Payment Method Lightning
 
 POST /order
 
@@ -91,7 +90,10 @@ JSON Body Example
         }
       }
 
-**Paid with balance example**
+[Query order status result](#order-status-lightning-success)
+
+
+# Order Payment Method balance
 
 Create and Purchase Order when paying with bitcoin account balance
 
@@ -122,14 +124,15 @@ JSON Body Example
         "status": "payment_pending"
       }
       
-[Query order status result](#success-example-query-order-paid-with-balance)
+[Query order status result](#order-status-balance-success)
 
+# Query Order Status
 
 GET /order/:orderid
 
 After paying for an order, order status can be received through a webhook if webhook_url provided, or by manually querying order status.
 
-**Unpaid example lightning**
+# Order Status lightning Unpaid 
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ce472b9950b353c59bcd412
     > {
@@ -149,8 +152,8 @@ After paying for an order, order status can be received through a webhook if web
           "altcoinCode": "LNBC"
         }
       }
-      
-**Success Example lightning**
+
+# Order Status lightning Success
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ce472b9950b353c59bcd412
     > {
@@ -177,7 +180,7 @@ After paying for an order, order status can be received through a webhook if web
       }
     }
     
-# Success Example: Query Order Paid with Balance
+# Order Status Balance Success
 
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ceca6d9cd48800004097403
@@ -198,6 +201,7 @@ After paying for an order, order status can be received through a webhook if web
       }
     }
 
+# Thor Data Response
 
 When an order is successful, a generated QR code of the lightning lnurl can be shown, or a link to our site guiding the user to have a channel opened to them.
 
@@ -207,5 +211,9 @@ When an order is successful, a generated QR code of the lightning lnurl can be s
         "lnurl": "lightning:lnurl1dp68gurn8ghj7ctsdyhxy6t5wfjkv6tvdshxxmmd9amrztm5dphhy0m385mkxv3jxsmxvvt9xdjxvvfkx5mxgeph8qmnydehxu6xxcmrxuexxdnp89jx2vp3vy6kxvnzxs6x2e3svyunydrpxvmxzerzxgunwwrxvzu77f",
         "other": "Open your new lightning channel with redemption instructions provided"
       }
+      
+> Link provided links to our site containing instructions to redeem a channel
+
+> lnurl contains all data necessary for users to open a channel if lnurl supported, lnurl can also be shown as a QR code
 
 More info on lnurl: https://github.com/btcontract/lnurl-rfc/blob/master/spec.md#1-incoming-payment-channel-request
