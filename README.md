@@ -9,6 +9,13 @@
     Example: curl -u API_KEY:API_SECRET https://api.bitrefill.com/v1/test
     > Hello World!
 
+# General flow
+
+The general flow of a purchase is as follow: 
+
+- 1) [Create an order](#order-creation)
+- 2) Pay for it, send crypto to the generated address or use our [`/purchase` call](#purchase-call) to pay with your account balance
+- 3) Check the order status either by [polling the order status](#query-order-status) or [using a webhook](#webhook)
 
 # Inventory
 Query inventory for packages in stock
@@ -53,7 +60,9 @@ Turbo channels include a balance and incoming capacity.
         ],
     }
 
-# Order Payment Method Lightning
+# Order Creation
+
+## Payment Method Lightning
 
 POST /order
 
@@ -66,7 +75,7 @@ JSON Body Example
         "sendEmail" : true/false, // Optional. If false, receipt email won't be sent. Default: true
         "paymentMethod": "lightning" // Payment methods supported 'lightning' 'lightning-ltc' 'bitcoin' 'ethereum' litecoin' 'dash' 'dogecoin'
         "refund_address" : "1fdsfjakiwlewkld3845kd8", // Optional. If there is an error, we will send a refund to this address. Use bitcoin on chain addresses for lightning paymentMethod
-        "webhook_url" : "http://your.webhook.url", // Optional. See Webhook section https://bitrefill.docs.apiary.io/#reference/webhooks//order
+        "webhook_url" : "http://your.webhook.url", // Optional
         "userRef": "internal-id-01" // Optional, a reference for your system ( max 128 chars )
     }
 
@@ -93,7 +102,7 @@ JSON Body Example
 [Query order status result](#order-status-lightning-success)
 
 
-# Order Payment Method balance
+## Payment Method balance
 
 Create and Purchase Order when paying with bitcoin account balance
 
@@ -106,7 +115,7 @@ JSON Body Example
         "valuePackage" : "2,000,000 sats capacity",
         "email" : "Customer email", // used for receipts
         "sendEmail" : true/false, // Optional. If false, receipt email won't be sent. Default: true
-        "webhook_url" : "http://your.webhook.url", // Optional. See Webhook section https://bitrefill.docs.apiary.io/#reference/webhooks//order
+        "webhook_url" : "http://your.webhook.url", // Optional
         "userRef": "internal-id-01" // Optional, a reference for your system ( max 128 chars )
     }
 
@@ -132,7 +141,7 @@ GET /order/:orderid
 
 After paying for an order, order status can be received through a webhook if webhook_url provided, or by manually querying order status.
 
-# Order Status lightning Unpaid 
+## Order Status lightning Unpaid 
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ce472b9950b353c59bcd412
     > {
@@ -153,7 +162,7 @@ After paying for an order, order status can be received through a webhook if web
         }
       }
 
-# Order Status lightning Success
+## Order Status lightning Success
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ce472b9950b353c59bcd412
     > {
@@ -180,7 +189,7 @@ After paying for an order, order status can be received through a webhook if web
       }
     }
     
-# Order Status Balance Success
+## Order Status Balance Success
 
 
     Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order/5ceca6d9cd48800004097403
@@ -200,6 +209,10 @@ After paying for an order, order status can be received through a webhook if web
         "other": "Open your new lightning channel with redemption instructions provided"
       }
     }
+
+## Webhook
+
+If you have set up a webhook URL on order creation you will receive the same data as above directly to the provided URL once the channel is ready ( or failed to be created ). 
 
 # Thor Data Response
 
