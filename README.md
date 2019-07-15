@@ -20,6 +20,37 @@ The general flow of a purchase is as follow:
 # Inventory
 Query inventory for packages in stock
 
+GET /inventory/lightning-recharge
+
+    Example: curl -u API_KEY:API_SECRET https://api.bitrefill.com/v1/inventory/lightning-recharge
+    > {
+      "operator": {
+        "name": "Thor Recharge",
+        "slug": "lightning-recharge",
+        "isRanged": true,
+        "currency": "SAT",
+        "packages": [
+          {
+            "value": "500000",
+            "eurPrice": 49.22,
+            "satoshiPrice": 510400,
+            "usdPrice": 55.41,
+            "userPrice": 510400
+          },
+        ],
+        "range": {
+          "min": 500,
+          "max": 4294967,
+          "step": 1,
+          "customerPriceRate": 9.739384389926184e-05,
+          "customerSatoshiPriceRate": 1.0200634879994863,
+          "customerEurPriceRate": 9.836778233825446e-05,
+          "userPriceRate": 1.0200634879994863,
+          "purchaseFee": 300.1106152450074
+        },
+    }
+
+
 GET /inventory/lightning-channel
 
     Example: curl -u API_KEY:API_SECRET https://api.bitrefill.com/v1/inventory/lightning-channel
@@ -98,6 +129,64 @@ JSON Body Example
           "altcoinCode": "LNBC"
         }
       }
+
+Lightning Recharge Order Example
+    
+JSON Body Example
+    
+    Lightning Invoice is set in the number property
+    {
+        "operatorSlug": "lightning-recharge",
+        "number": "lnbc10u1pwjeee3pp53um2gnz6nsuflzkp77mjpmcurkmm5gvmv99yefhzxlt3dqkjqk7sdqqcqzpgqyg7tf54ddyusayg20m88ez02kn8uvu77rc95lcpetj3fqd68uajtl9xq0hsnupwqu68cxeqs5k7zj9gmkdt56k452x4u445yxgxm7sq5ljxkm",
+        "valuePackage" : "1000", // satoshis
+        "email" : "Customer email", // used for receipts
+        "sendEmail" : true/false, // Optional. If false, receipt email won't be sent. Default: true
+        "paymentMethod": "lightning" // Payment methods supported 'lightning' 'lightning-ltc' 'bitcoin' 'ethereum' litecoin' 'dash' 'dogecoin'
+        "refund_address" : "1fdsfjakiwlewkld3845kd8", // Optional. If there is an error, we will send a refund to this address. Use bitcoin on chain addresses for lightning paymentMethod
+        "webhook_url" : "http://your.webhook.url", // Optional
+        "userRef": "internal-id-01" // Optional, a reference for your system ( max 128 chars )
+    }
+
+    Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order -d '{ "paymentMethod": "bitcoin", "operatorSlug": "lightning-recharge", "valuePackage": "1000", "email": "test@bitrefill.com","number": "lnbc10u1pwjeee3pp53um2gnz6nsuflzkp77mjpmcurkmm5gvmv99yefhzxlt3dqkjqk7sdqqcqzpgqyg7tf54ddyusayg20m88ez02kn8uvu77rc95lcpetj3fqd68uajtl9xq0hsnupwqu68cxeqs5k7zj9gmkdt56k452x4u445yxgxm7sq5ljxkm"}'
+    >{
+      "id": "5d2ce7ac33fce40004c7b781",
+      "email": "test@bitrefill.com",
+      "number": "lnbc10u1pwjeee3pp53um2gnz6nsuflzkp77mjpmcurkmm5gvmv99yefhzxlt3dqkjqk7sdqqcqzpgqyg7tf54ddyusayg20m88ez02kn8uvu77rc95lcpetj3fqd68uajtl9xq0hsnupwqu68cxeqs5k7zj9gmkdt56k452x4u445yxgxm7sq5ljxkm",
+      "expired": false,
+      "sent": false,
+      "refunded": false,
+      "value": "1000",
+      "currency": "SAT",
+      "operator": "lightning-recharge",
+      "country": "international",
+      "summary": "Thor Recharge 1000 SAT",
+      "price": 1100,
+      "commission": 0,
+      "overcharge": 0,
+      "priciness": 1.0404,
+      "merchant_price": 1100,
+      "satoshiPrice": 1100,
+      "usdPrice": 0.12,
+      "eurPrice": 0.1,
+      "delivered": false,
+      "partialPayment": false,
+      "btcPrice": "0.000011",
+      "itemDesc": "Thor Recharge 1000 SAT",
+      "valuePackage": "1000",
+      "operatorSlug": "lightning-recharge",
+      "operatorType": "lightning",
+      "invoiceTimeLeft": 899846,
+      "invoiceTime": 1563223980090,
+      "expirationTime": 1563224880090,
+      "paymentMethod": "bitcoin",
+      "zeroConfStatus": "pending",
+      "recommended_fee_rate": 6,
+      "payment": {
+        "address": "3NonYQQ2HzZDc91rZK6n9VfCy6yv5N1TxN",
+        "satoshiPrice": 1100,
+        "BIP21": "bitcoin:3NonYQQ2HzZDc91rZK6n9VfCy6yv5N1TxN?amount=0.000011"
+      }
+    }
 
 [Query order status result](#order-status-lightning-success)
 
