@@ -50,15 +50,16 @@ GET /inventory/lightning-channel
           "name": "Thor Lightning Channel Capacity",
           "slug": "lightning-channel",
           "currency": "SAT",
-          "packages": [
-            {
-              "value": "2000000",
-              "eurPrice": 5.83,
-              "satoshiPrice": 78498,
-              "usdPrice": 6.5,
-              "userPrice": 78498
-            },
-          ],
+          "range":{
+            "min":500000,
+            "max":16777215,
+            "step":1,
+            "customerPriceRate":0.0000010671007137192704,
+            "customerSatoshiPriceRate":0.015185658220118399,
+            "customerEurPriceRate":0.0000010777717208564632,
+            "userPriceRate":0.015185658220118399,
+            "purchaseFee":10023
+          },
       }
 
 GET /inventory/turbo-lightning-channel
@@ -80,8 +81,7 @@ Turbo channels include a balance and incoming capacity. Capacity will be double 
             "customerEurPriceRate":0.00007436624873909596,
             "userPriceRate":1.047072761487067,
             "purchaseFee":10016.480236160778
-        }
-        ],
+        },
     }
 
 # Order Creation
@@ -207,7 +207,7 @@ JSON Body Example
         "id": "5ceca6d9cd48800004097403",
         "email": "test@bitrefill.com",
         "expired": false,
-        "value": "2,000,000 sats capacity",
+        "value": "2000000",
         "product": "lightning-channel",
         "price": 80900,
         "partialPayment": false,
@@ -230,7 +230,7 @@ After paying for an order, order status can be received through a webhook if web
         "id": "5ce472b9950b353c59bcd412",
         "email": "test@bitrefill.com",
         "expired": false,
-        "value": "2,000,000 sats capacity",
+        "value": "2000000",
         "product": "lightning-channel",
         "price": 78498,
         "partialPayment": false,
@@ -279,7 +279,7 @@ After paying for an order, order status can be received through a webhook if web
       "id": "5ceca6d9cd48800004097403",
       "email": "test@bitrefill.com",
       "expired": false,
-      "value": "2,000,000 sats capacity",
+      "value": "2000000",
       "product": "lightning-channel",
       "price": 80900,
       "partialPayment": false,
