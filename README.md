@@ -29,15 +29,6 @@ GET /inventory/lightning-recharge
         "slug": "lightning-recharge",
         "isRanged": true,
         "currency": "SAT",
-        "packages": [
-          {
-            "value": "500000",
-            "eurPrice": 49.22,
-            "satoshiPrice": 510400,
-            "usdPrice": 55.41,
-            "userPrice": 510400
-          },
-        ],
         "range": {
           "min": 500,
           "max": 4294967,
@@ -56,12 +47,12 @@ GET /inventory/lightning-channel
     Example: curl -u API_KEY:API_SECRET https://api.bitrefill.com/v1/inventory/lightning-channel
     > {
         "operator": {
-          "name": "Lightning Channel",
+          "name": "Thor Lightning Channel Capacity",
           "slug": "lightning-channel",
           "currency": "SAT",
           "packages": [
             {
-              "value": "2,000,000 sats capacity",
+              "value": "2000000",
               "eurPrice": 5.83,
               "satoshiPrice": 78498,
               "usdPrice": 6.5,
@@ -72,22 +63,24 @@ GET /inventory/lightning-channel
 
 GET /inventory/turbo-lightning-channel
 
-Turbo channels include a balance and incoming capacity.
+Turbo channels include a balance and incoming capacity. Capacity will be double the value package selected.
 
     Example: curl -u API_KEY:API_SECRET https://api.bitrefill.com/v1/inventory/turbo-lightning-channel
     > {
       "operator": {
-        "name": "Turbo Lightning Channel",
+        "name": "Thor Turbo Lightning Channel",
         "slug": "turbo-lightning-channel",
         "currency": "SAT",
-        "packages": [
-          {
-            "value": "500,000 sats balance (1,000,000 sats capacity)",
-            "eurPrice": 41.11,
-            "satoshiPrice": 575600,
-            "usdPrice": 45.89,
-            "userPrice": 575600
-          },
+        "range": {
+            "min":500000,
+            "max":8388607,
+            "step":1,
+            "customerPriceRate":0.00007362994924662966,
+            "customerSatoshiPriceRate":1.047072761487067,
+            "customerEurPriceRate":0.00007436624873909596,
+            "userPriceRate":1.047072761487067,
+            "purchaseFee":10016.480236160778
+        }
         ],
     }
 
@@ -101,7 +94,7 @@ JSON Body Example
 
     {
         "operatorSlug": "lightning-channel",
-        "valuePackage" : "2,000,000 sats capacity",
+        "valuePackage" : "2000000",
         "email" : "Customer email", // used for receipts
         "sendEmail" : true/false, // Optional. If false, receipt email won't be sent. Default: true
         "paymentMethod": "lightning" // Payment methods supported 'lightning' 'lightning-ltc' 'bitcoin' 'ethereum' litecoin' 'dash' 'dogecoin'
@@ -111,12 +104,12 @@ JSON Body Example
     }
 
 
-    Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order -d '{ "paymentMethod": "lightning", "operatorSlug": "lightning-channel", "valuePackage": "2,000,000 sats capacity", "email": "test@bitrefill.com"}'
+    Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/order -d '{ "paymentMethod": "lightning", "operatorSlug": "lightning-channel", "valuePackage": "2000000", "email": "test@bitrefill.com"}'
     > {
         "id": "5ce472b9950b353c59bcd412",
         "email": "test@bitrefill.com",
         "expired": false,
-        "value": "2,000,000 sats capacity",
+        "value": "2000000",
         "product": "lightning-channel",
         "price": 78498,
         "partialPayment": false,
@@ -201,7 +194,7 @@ JSON Body Example
 
     {
         "operatorSlug": "lightning-channel",
-        "valuePackage" : "2,000,000 sats capacity",
+        "valuePackage" : "2000000",
         "email" : "Customer email", // used for receipts
         "sendEmail" : true/false, // Optional. If false, receipt email won't be sent. Default: true
         "webhook_url" : "http://your.webhook.url", // Optional
@@ -209,7 +202,7 @@ JSON Body Example
     }
 
 
-    Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/purchase -d '{"operatorSlug": "lightning-channel", "valuePackage": "2,000,000 sats capacity", "email": "test@bitrefill.com"}'
+    Example: curl -u API_KEY:API_SECRET -H 'Content-Type: application/json' https://api.bitrefill.com/v1/purchase -d '{"operatorSlug": "lightning-channel", "valuePackage": "2000000", "email": "test@bitrefill.com"}'
     > {
         "id": "5ceca6d9cd48800004097403",
         "email": "test@bitrefill.com",
