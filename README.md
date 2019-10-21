@@ -251,7 +251,7 @@ After paying for an order, order status can be received through a webhook if web
       "id": "5ce47aa5d4abef44c7a2f91e",
       "email": "test@bitrefill.com",
       "expired": false,
-      "value": "2,000,000 sats capacity",
+      "value": "2000000",
       "product": "lightning-channel",
       "price": 79184,
       "partialPayment": false,
