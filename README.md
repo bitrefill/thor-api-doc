@@ -17,6 +17,8 @@ The general flow of a purchase is as follow:
 - 2) Pay for it, send crypto to the generated address or use our [`/purchase` call](#purchase-call) to pay with your account balance
 - 3) Check the order status either by [polling the order status](#query-order-status) or [using a webhook](#webhook)
 
+Thor Recharge is currently in beta
+
 # Inventory
 Query inventory for packages in stock
 
